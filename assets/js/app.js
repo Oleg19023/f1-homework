@@ -2,18 +2,15 @@
 fetch('https://restcountries.com/v3.1/all')
     .then(response => response.json())
     .then(countries => {
-        // Загрузка курсов валют НБУ
+        // Загрузка курсов валют
         fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json')
             .then(response => response.json())
             .then(currencies => {
-                // Обработка данных и отображение результатов
-                displayResults(countries, currencies);
-                
-        // Добавление текущей даты в заголовок
-        const date = currencies[0].exchangedate; // Получение даты из первого объекта в массиве валют
+                // Обработка
+                displayResults(countries, currencies);        
+        const date = currencies[0].exchangedate;
         const titleElement = document.querySelector('h1');
-        titleElement.textContent += ` на ${date}`; // Добавление даты к тексту заголовка
-
+        titleElement.textContent += ` на ${date}`;
             });
     });
 
@@ -34,7 +31,7 @@ fetch('https://restcountries.com/v3.1/all')
 //     }
 
 //     currencies.forEach(currency => {
-//         // Создать элемент для отображения информации о валюте
+//         // отображения информации о валюте
 //         const currencyElement = document.createElement('div');
 //         currencyElement.innerHTML = `
 //                 <h2>${currency.txt} (${currency.cc})</h2>
@@ -54,11 +51,11 @@ function displayResults(countries, currencies) {
         if (country && country.flags) {
             const flagElement = document.createElement('img');
             flagElement.src = country.flags.png;
-            flagElement.title = country.name.common; // This will add a tooltip with the country name
+            flagElement.title = country.name.common;
             flagElement.style.height = '60px';
             flagElement.style.width = '90px';
             container.appendChild(flagElement);
-            container.appendChild(document.createElement('br')); // This will add a line break after each flag
+            container.appendChild(document.createElement('br'));
 
             const currency = currencies.find(c => {
                 if (country.currencies) {
@@ -78,13 +75,15 @@ function displayResults(countries, currencies) {
     });
 }
 
-// Загрузка списка стран
+
+
+
 fetch('https://restcountries.com/v3.1/all')
     .then(response => response.json())
     .then(countries => {
         countries.forEach(country => {
             if (country.flags) {
-                console.log(country.flags.png); // Вывод ссылки на флаг страны
+                console.log(country.flags.png);
             }
         });
     });
